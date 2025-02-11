@@ -1,7 +1,7 @@
 import tkinter as tk
 from functools import partial as ftpl
 
-d = ["ソルジャー","ヘビーアーマー","ワルキューレ","ローグ","バンデッド","天使","竜兵","侍","神官戦士","アーチャー","メイジ","ヒーラー","ウィッチ","パイレーツ","ヴァンパイアハンター","砲術士","ビショップ"]
+d = ["ソルジャー","ヘビーアーマー","ワルキューレ","ローグ","バンデッド","竜兵","侍","忍者","モンク","魔法剣士","天使","神官戦士","アーチャー","メイジ","ヒーラー","ウィッチ","パイレーツ","ヴァンパイアハンター","砲術士","ビショップ"]
 import os
 import webbrowser as wb
 from urllib.parse import quote
@@ -24,26 +24,28 @@ class main_window:
     def __init__(self,a):
         self.root =tk.Tk()
         self.root.title("アイギスのCC銀必要数確認用")
-        self.root.geometry("440x300")
+        self.root.geometry("540x400")
+        self.root.tk.call('wm', 'iconphoto', self.root._w)
+
         self.w =[]
         self.val =[]
         self.fr =[]
         self.l=[]
         for i,val in enumerate(a):  #a=range(17)
             print(i)
-            fr = tk.Frame(self.root,width=100)
+            fr = tk.Frame(self.root,width=200)
             print(i) #0~16まで表示される
-            self.w.append(tk.Button(fr,text=f"{'0'.zfill(3)}",command=ftpl(self.add,i)))
+            self.w.append(tk.Button(fr,text=f"{'0'.zfill(3)}",command=ftpl(self.add,i),font=("",16)))
             self.l.append( tk.Label(fr,text=f"{val}",anchor="n"))
             self.val.append(0)
             self.fr.append(fr)
-            
+            self.fr[-1].place(x=(i%5)*100+20,y=(i//5)*70+5)
             self.l[-1].pack()#(x=0,y=30)
             self.w[-1].pack()#(x=0,y=0)
             #20
-            self.fr[-1].place(x=(i%5)*75+20,y=(i//5)*70+5)
+            
         self.b =tk.Button(self.root,text="出力",font=("",20),command=self.dump,anchor="sw")
-        self.b.place(x=300,y=200)
+        self.b.place(x=430,y=300)
     def add(self,k):
         self.val[k]+=1
         self.w[k]["text"]=str(self.val[k]).zfill(3)
